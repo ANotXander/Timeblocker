@@ -146,17 +146,10 @@ let convertTo = new class {
         }
         return out;
     }
-    obsidian(){ //You know cause. It has a plugin for that 
-        /*
-        var out = [];
-        for(const i in dates){            
-            out[i] += "[ ]" + times[i*2] + " - " + times[i*2+1] + "\n";
-        }
-        */
-        //Pack these as .md files and upload it as a zip, somehow?
+    obsidian(){ //Turns out none of that was even necessary, pasting it into its own file will automatically set the dates
         var tempSolutionPleaseFixMeLaterPleaseAndThankYou = "";
         for(const i in dates){
-            tempSolutionPleaseFixMeLaterPleaseAndThankYou += "[ ] " + times[i*2] + " - " + times[i*2+1] + "\n";
+            tempSolutionPleaseFixMeLaterPleaseAndThankYou += "[ ] " + dates[i] + times[i*2] + " - " + times[i*2+1] + "\n";
         }
         return tempSolutionPleaseFixMeLaterPleaseAndThankYou;
     }
