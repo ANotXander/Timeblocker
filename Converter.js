@@ -1,37 +1,4 @@
 
-//debug, make this an input somehow
-let schedule = `Sun 1/26 12:00PM to 9:45PM
-
- 894 NowhereVille Av Unit 3421, Somewhere, NY
-
-Mon 1/27 2:30PM to 10:15PM
-
-894 NowhereVille Av Unit 3421, Somewhere, NY
-
-Tue 1/28 3:00PM to 10:15PM
-
-894 NowhereVille Av Unit 3421, Somewhere, NY
-
-Thu 2/6 12:00PM to 10:00PM
-
-894 NowhereVille Av Unit 3421, Somewhere, NY
-
-Fri 2/7 5:00PM to 10:30PM
-
-894 NowhereVille Av Unit 3421, Somewhere, NY
-
-Sat 2/8 3:00PM to 10:30PM
-
-894 NowhereVille Av Unit 3421, Somewhere, NY
-
-Sun 2/9 12:00PM to 9:45PM
-
-894 NowhereVille Av Unit 3421, Somewhere, NY
-
-Mon 2/10 2:30PM to 10:00PM
-
-894 NowhereVille Av Unit 3421, Somewhere, NY`
-
 //**
 // ASSUMPTIONS TO MAKE: 
 // Times are either 3 or 4 digits long
@@ -58,15 +25,15 @@ const months = [
     "December"
 ]
 
-var dates = []
-var times = []
+var dates = [];
+var times = [];
 var typeOfValue = null; 
 
 var is24H = false; //assume false, unless proven true
 var isEU = false; //ditto
 var formal = false; //assumes DA/TE (with and without a / or -) TI:ME, I'm not sure how to have it check for (June 4th, from 12PM to 8PM) without rewriting the function
 
-var memory = ""
+var memory = "";
 
 let checkValid = new class {
     date(input){
@@ -81,6 +48,9 @@ let checkValid = new class {
         var cTime = input.split(":");
 
         if (cTime.length != 2) {return false;}
+        if (cTime[1] = cTime[1].substring(0,1)){
+
+        }
         cTime[1] = cTime[1].substring(0,1); //Making sure it doesn't accidentially catch the AM/PM
         if (isNaN(cTime[0]) == true || isNaN(cTime[1])){return false;}
         if ((is24H == true && cTime[0] > 24) || cTime[0] > 12 && cTime[1] > 0){return false;}
@@ -96,8 +66,8 @@ let checkValid = new class {
     }
 }
 
-let processStringToData = function(input,seperator) {
-    var search = input.split(seperator)
+let processStringToData = function(input) {
+    var search = input.split("")
     for (const i of search) { 
         switch (isNaN(i)) { //Evil typechecking to see if it's a number
             case false:
@@ -108,7 +78,7 @@ let processStringToData = function(input,seperator) {
                 if (i == " "){
                     if (typeOfValue = "date"){
                         if (checkValid.date(memory)){
-                            dates[dates.length] = memory
+                            dates[dates.length] = memory;
                         }
                         memory = "";
                     } else typeOfValue = "date";
@@ -120,7 +90,7 @@ let processStringToData = function(input,seperator) {
             case true:    
                 switch (i){ 
                     case checkValid.letter(i):
-                        var capital = i.toLocaleUpperCase()
+                        var capital = i.toLocaleUpperCase();
                         switch(capital){
                             case "M":
                                 memory += capital;
@@ -162,6 +132,45 @@ let processStringToData = function(input,seperator) {
     }   
     console.log(times);
     console.log(dates);
-    //Somehow use this information it gathers to determine when things are scheduled.
 }
-processStringToData(schedule,"")
+
+let convertTo = new class {
+    notepad(){
+        var out = "";
+        for(const i in dates){
+            //TODO: Rewrite the entire array structure so it can use the date class to get weekdays.
+            //also you know so white space can be added for days off.
+            //For now, this will work.
+            out += dates[i] + " " + times[i*2] + " - " + times[i*2+1] + "\n";
+            
+        }
+        return out;
+    }
+    obsidian(){ //You know cause. It has a plugin for that 
+        /*
+        var out = [];
+        for(const i in dates){            
+            out[i] += "[ ]" + times[i*2] + " - " + times[i*2+1] + "\n";
+        }
+        */
+        //Pack these as .md files and upload it as a zip, somehow?
+        var tempSolutionPleaseFixMeLaterPleaseAndThankYou = "";
+        for(const i in dates){
+            tempSolutionPleaseFixMeLaterPleaseAndThankYou += "[ ] " + times[i*2] + " - " + times[i*2+1] + "\n";
+        }
+        return tempSolutionPleaseFixMeLaterPleaseAndThankYou;
+    }
+
+}
+
+function handleHTMLtomfoolery(inputType){
+    let output;
+    let schedule = prompt("Copy and paste your schedule:", "");
+    if (!(schedule == null || schedule == "")){
+        processStringToData(schedule);
+        output = convertTo[inputType](); //i hope this works <3
+    }
+    console.log(output)
+    document.getElementById("schedule").innerText = "Here you go \n" + output;
+}
+

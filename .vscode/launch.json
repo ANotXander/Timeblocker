@@ -2,10 +2,13 @@
     // Use IntelliSense to learn about possible attributes.
     // Hover to view descriptions of existing attributes.
     // For more information, visit: https://go.microsoft.com/fwlink/?linkid=830387
+    
+
+    //None of this works on my machine, I'm just going to open the html in my browser and hope for the best.
     "version": "0.2.0",
     "configurations": [
         {
-            "name": "Launch index.html",
+            "name": "index.html",
             "type": "firefox",
             "request": "launch",
             "reAttach": true,
