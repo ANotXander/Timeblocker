@@ -1,1 +1,1 @@
-# Right now this is just a script that converts a given plaintext schedule into something thats more easy to manage.
+The name is kind of a misnomer, right now it's just a script with a very basic frontend 
