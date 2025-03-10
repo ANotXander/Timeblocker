@@ -147,11 +147,11 @@ let convertTo = new class {
         return out;
     }
     obsidian(){ //Turns out none of that was even necessary, pasting it into its own file will automatically set the dates
-        var tempSolutionPleaseFixMeLaterPleaseAndThankYou = "";
+        var out = "";
         for(const i in dates){
-            tempSolutionPleaseFixMeLaterPleaseAndThankYou += "[ ] " + dates[i] + times[i*2] + " - " + times[i*2+1] + "\n";
+            out += "[ ] " + dates[i] + times[i*2] + " - " + times[i*2+1] + "\n";
         }
-        return tempSolutionPleaseFixMeLaterPleaseAndThankYou;
+        return out;
     }
 
 }
