@@ -33,14 +33,12 @@ var is24H = false; //assume false, unless proven true
 var isEU = false; //ditto
 var formal = false; //assumes DA/TE (with and without a / or -) TI:ME, I'm not sure how to have it check for (June 4th, from 12PM to 8PM) without rewriting the function
 
-var memory = "";
-
 let checkValid = new class {
     date(input){
         input = input.replace("-","/")
         var cDate = input.split("/");
+     
         if (isNaN(cDate[0]) == true || isNaN(cDate[1])){return false;}
-    
         if ((cDate[0] > 30 && cDate[1] > 12) || (cDate[0] > 12 && cDate[1] > 30)){return false;} //TODO: check for even and odds dates and also februrary
         return true;
     }
@@ -48,8 +46,8 @@ let checkValid = new class {
         var cTime = input.split(":");
 
         if (cTime.length != 2) {return false;}
-        if (cTime[1] = cTime[1].substring(0,1)){
-
+        if (cTime[1] == cTime[1].substring(0,1) || is24H){
+        //check for it being 24:00
         }
         cTime[1] = cTime[1].substring(0,1); //Making sure it doesn't accidentially catch the AM/PM
         if (isNaN(cTime[0]) == true || isNaN(cTime[1])){return false;}
@@ -66,6 +64,7 @@ let checkValid = new class {
     }
 }
 
+var memory = "";
 let processStringToData = function(input) {
     var search = input.split("")
     for (const i of search) { 
@@ -120,18 +119,14 @@ let processStringToData = function(input) {
                         typeOfValue = "time";
                         memory += i;
                     break;   
-                    default:
+                    default: //TODO: have the memory pick it up and then have it check for "th" "st" "rd" "nd" as well as months on whitespace.
                         memory = "";
                     break;
                 }
             default:
             break;
         }
-
-        
     }   
-    console.log(times);
-    console.log(dates);
 }
 
 let convertTo = new class {
@@ -158,12 +153,11 @@ let convertTo = new class {
 
 function handleHTMLtomfoolery(inputType){
     let output;
-    let schedule = prompt("Copy and paste your schedule:", "");
+    let schedule = prompt("Paste your schedule in here:", "");
     if (!(schedule == null || schedule == "")){
         processStringToData(schedule);
-        output = convertTo[inputType](); //i hope this works <3
+        output = convertTo[inputType]();
     }
-    console.log(output)
-    document.getElementById("schedule").innerText = "Here you go \n" + output;
+    document.getElementById("schedule").innerText = "Here you go \n\n" + output;
 }
 
