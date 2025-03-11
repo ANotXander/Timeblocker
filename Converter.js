@@ -149,7 +149,7 @@ let convertTo = new class {
     obsidian(){ //Turns out none of that was even necessary, pasting it into its own file will automatically set the dates
         var out = "";
         for(const i in dates){
-            out += "[ ] " + dates[i] + times[i*2] + " - " + times[i*2+1] + "\n";
+            out += "[ ] " + dates[i] + " " + times[i*2] + " - " + times[i*2+1] + "\n";
         }
         return out;
     }
