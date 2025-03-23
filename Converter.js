@@ -37,9 +37,13 @@ let checkValid = new class {
     date(input){
         input = input.replace("-","/")
         var cDate = input.split("/");
-     
-        if (isNaN(cDate[0]) == true || isNaN(cDate[1])){return false;}
+        //cDate[0], cDate[1] = Number(cDate[0]), Number(cDate[1])
+        if (cDate[0] == "" || cDate[1] == ""){ return false;} //this is a bodge, i am very bad, no good code, please fix my core issue so i do not have to bring suffering to this world
+
+        if (isNaN(cDate[0]) || isNaN(cDate[1])){return false;}
         if ((cDate[0] > 30 && cDate[1] > 12) || (cDate[0] > 12 && cDate[1] > 30)){return false;} //TODO: check for even and odds dates and also februrary
+
+
         return true;
     }
     time(input){
@@ -66,6 +70,8 @@ let checkValid = new class {
 
 var memory = "";
 let processStringToData = function(input) {
+    dates = [];
+    times = [];
     var search = input.split("")
     for (const i of search) { 
         switch (isNaN(i)) { //Evil typechecking to see if it's a number
@@ -80,7 +86,7 @@ let processStringToData = function(input) {
                             dates[dates.length] = memory;
                         }
                         memory = "";
-                    } else typeOfValue = "date";
+                    } else typeOfValue = "date"; 
                 } else { 
                     memory += i; 
                 }
